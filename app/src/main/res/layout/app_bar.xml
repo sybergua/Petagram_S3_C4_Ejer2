@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/btnAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icons8_galon_izquierdo"
+        android:layout_alignParentLeft="true"/>
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/btnAtras"
+        android:layout_toRightOf="@+id/btnAtras"
+        android:src="@drawable/icons8_huella_de_gato_48" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:id="@+id/tvTituloAppBar"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <ImageButton
+        android:id="@+id/btnFavorito2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/icons8_hotel_48" />
+
+</RelativeLayout>
