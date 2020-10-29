@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
 
     <ImageButton
         android:id="@+id/btnAtras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/icons8_galon_izquierdo"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/icons8_izquierda_32"
+        android:layout_centerVertical="true"/>
 
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/btnAtras"
+        android:layout_marginLeft="8dp"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/btnAtras"
         android:src="@drawable/icons8_huella_de_gato_48" />
 
     <TextView
+        android:id="@+id/tvTituloAppBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_toLeftOf="@+id/btnFavorito2"
+        android:layout_toRightOf="@+id/imgLogo"
         android:layout_centerVertical="true"
+        android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/white"
-        android:id="@+id/tvTituloAppBar"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/btnFavorito2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/icons8_hotel_48" />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.petagram_;
+package com.petagram_.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.petagram_.models.Mascota;
+import com.petagram_.R;
 
 import java.util.ArrayList;
 

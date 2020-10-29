@@ -1,21 +1,26 @@
-package com.petagram_;
+package com.petagram_.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.petagram_.models.Mascota;
+import com.petagram_.adapters.MascotaAdaptador;
+import com.petagram_.R;
+
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static android.app.ActionBar.DISPLAY_SHOW_CUSTOM;
 
 public class MascotasFavoritas extends AppCompatActivity {
+    private Toolbar toolbar;
     private ArrayList<Mascota> mascotas;
     private RecyclerView listaMascotas;
 
@@ -25,8 +30,12 @@ public class MascotasFavoritas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mascotas_favoritas);
 
-        getSupportActionBar().setDisplayOptions(DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.app_bar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayOptions(DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(R.layout.app_bar);
+        }
 
         ImageButton btnFavorito = (ImageButton) findViewById(R.id.btnFavorito2);
         btnFavorito.setVisibility(View.INVISIBLE);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.petagram_">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,14 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Petagram_">
-        <activity android:name=".MascotasFavoritas"></activity>
-
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.Biografia"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.Contact"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.MascotasFavoritas"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

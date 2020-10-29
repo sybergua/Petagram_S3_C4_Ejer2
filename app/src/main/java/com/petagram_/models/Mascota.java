@@ -1,4 +1,4 @@
-package com.petagram_;
+package com.petagram_.models;
 
 public class Mascota {
     private String nombreMascota;
