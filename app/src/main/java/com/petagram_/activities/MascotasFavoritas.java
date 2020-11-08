@@ -1,14 +1,18 @@
 package com.petagram_.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.petagram_.db.ConstructorMascotasFavoritas;
 import com.petagram_.models.Mascota;
 import com.petagram_.adapters.MascotaAdaptador;
 import com.petagram_.R;
+import com.petagram_.presenter.IMascotasFavoritasPresenter;
+import com.petagram_.presenter.MascotasFavoritasPresenter;
 
 import java.util.ArrayList;
 
@@ -19,10 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static android.app.ActionBar.DISPLAY_SHOW_CUSTOM;
 
-public class MascotasFavoritas extends AppCompatActivity {
+public class MascotasFavoritas extends AppCompatActivity implements IMascotasFavoritasView {
     private Toolbar toolbar;
-    private ArrayList<Mascota> mascotas;
     private RecyclerView listaMascotas;
+    private IMascotasFavoritasPresenter presenter;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -52,27 +56,36 @@ public class MascotasFavoritas extends AppCompatActivity {
 
         listaMascotas = (RecyclerView) findViewById(R.id.rvFavoritos);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(RecyclerView.VERTICAL);
-        listaMascotas.setLayoutManager(llm);
+        presenter = new MascotasFavoritasPresenter(this, getApplicationContext());
 
-        inicializarListaMascotas();
-        inicializarAdaptador();
 
     }
 
-    private void inicializarListaMascotas(){
-        mascotas = new ArrayList();
-
-        mascotas.add(new Mascota("Molly",R.drawable.molly,0, false));
-        mascotas.add(new Mascota("Garfield", R.drawable.garfield,0, true));
-        mascotas.add(new Mascota("Perla", R.drawable.perla,0, false));
-        mascotas.add(new Mascota("Nemo", R.drawable.nemo,0, true));
-        mascotas.add(new Mascota("Dory", R.drawable.dory,0, false));
+    /*private void inicializarListaMascotas(){
+        ConstructorMascotasFavoritas constructorMascotasFavoritas = new ConstructorMascotasFavoritas(getApplicationContext());
+        mascotas = constructorMascotasFavoritas.obtenerMascotasFavoritas();
     }
 
     private void inicializarAdaptador(){
         MascotaAdaptador adaptador =new MascotaAdaptador(mascotas, this);
+        listaMascotas.setAdapter(adaptador);
+    }*/
+
+    @Override
+    public void generarLinearLayoutVertical() {
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(RecyclerView.VERTICAL);
+        listaMascotas.setLayoutManager(llm);
+    }
+
+    @Override
+    public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas) {
+        MascotaAdaptador adaptador = new MascotaAdaptador(mascotas, MascotasFavoritas.this);
+        return adaptador;
+    }
+
+    @Override
+    public void inicializarAdaptadorRV(MascotaAdaptador adaptador) {
         listaMascotas.setAdapter(adaptador);
     }
 }

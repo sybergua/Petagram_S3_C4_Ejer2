@@ -1,6 +1,7 @@
 package com.petagram_.models;
 
 public class Mascota {
+    private int id;
     private String nombreMascota;
     private int fotoMascota;
     private int valorRaiting;
@@ -11,6 +12,10 @@ public class Mascota {
         this.fotoMascota = fotoMascota;
         this.valorRaiting = valorRaiting;
         this.sexo = sexo;
+    }
+
+    public Mascota() {
+
     }
 
     public String getNombreMascota() {
@@ -43,5 +48,13 @@ public class Mascota {
 
     public void setSexo(boolean sexo) {
         this.sexo = sexo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
