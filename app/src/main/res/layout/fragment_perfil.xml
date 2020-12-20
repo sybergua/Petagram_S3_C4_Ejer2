@@ -23,7 +23,8 @@
         app:civ_shadow_color="#51D1F6"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/boxer"></com.mikhaellopez.circularimageview.CircularImageView>
+        android:src="@drawable/boxer"
+        android:background="@color/white"></com.mikhaellopez.circularimageview.CircularImageView>
 
     <EditText
         android:id="@+id/etPerfil"
@@ -31,7 +32,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Boxer"
+        android:text="Mascota"
         android:layout_below="@+id/imgPerfil"
         android:textSize="30sp"
         android:gravity="center"

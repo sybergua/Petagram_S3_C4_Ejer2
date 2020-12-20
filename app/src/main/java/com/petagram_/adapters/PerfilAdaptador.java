@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.petagram_.R;
 import com.petagram_.models.Foto;
 import com.petagram_.models.Mascota;
+import com.petagram_.models.Perfil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,6 +25,7 @@ public class PerfilAdaptador extends RecyclerView.Adapter<PerfilAdaptador.Perfil
     private ArrayList<Foto> fotos;
     private Activity activity;
     private boolean sexo;
+    private Perfil perfil;
 
 
     public PerfilAdaptador(ArrayList<Foto> fotos, Activity activity, boolean sexo){
@@ -39,7 +44,10 @@ public class PerfilAdaptador extends RecyclerView.Adapter<PerfilAdaptador.Perfil
     @Override
     public void onBindViewHolder(@NonNull PerfilViewHolder perfilViewHolder, int position) {
         final Foto foto = fotos.get(position);
-        perfilViewHolder.imgFotoPerfil.setImageResource(foto.getFoto());
+        Picasso.get()
+                .load(foto.getFoto())
+                .placeholder(R.drawable.boxer)
+                .into(perfilViewHolder.imgFotoPerfil);
         perfilViewHolder.tvRaitingPerfil.setText("" + foto.getRaiting());
 
         if(sexo){

@@ -9,4 +9,12 @@
         android:title="@string/menu_acercade"
         android:orderInCategory="101"
         ></item>
+    <item
+        android:id="@+id/mCuenta"
+        android:title="Cuenta"
+        android:orderInCategory="102"></item>
+    <item
+        android:id="@+id/mNotificaciones"
+        android:title="Notificaciones"
+        android:orderInCategory="103"></item>
 </menu>

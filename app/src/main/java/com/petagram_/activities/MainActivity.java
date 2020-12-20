@@ -6,20 +6,32 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.petagram_.fragment.PerfilFragment;
 import com.petagram_.fragment.MascotasFragment;
 import com.petagram_.adapters.PageAdapter;
 import com.petagram_.R;
+import com.petagram_.restApi.EndpointRegistroUsuario;
+import com.petagram_.restApi.adapter.RegistroUsuarioAdapter;
+import com.petagram_.restApi.model.UsuarioResponse;
 
 import java.util.ArrayList;
 
@@ -29,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String cuenta = "";
 
     @SuppressLint("WrongConstant")
     @Override
@@ -36,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent =getIntent();
+        String cuentaNueva = intent.getStringExtra("cuenta");
+
+        if(cuentaNueva != null){
+            cuenta = cuentaNueva;
+        }
         //getSupportActionBar().setDisplayOptions(DISPLAY_SHOW_CUSTOM);
         //getSupportActionBar().setCustomView(R.layout.app_bar);
 
@@ -87,6 +106,34 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.mCuenta:
+                intent = new Intent(this, Cuenta.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.mNotificaciones:
+                if(!cuenta.isEmpty()) {
+                    FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(new OnCompleteListener<String>() {
+                                @Override
+                                public void onComplete(@NonNull Task<String> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.w("Token: ", "Fetching FCM registration token failed", task.getException());
+                                        return;
+                                    }
+
+                                    // Get new FCM registration token
+                                    String token = task.getResult();
+
+                                    enviarToken(token, cuenta);
+                                    Log.d("Token solicitado: ", token);
+                                }
+                            });
+                    break;
+                }else{
+                    Toast.makeText(this, "Debe de Configurar una cuenta", Toast.LENGTH_LONG).show();
+                }
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -101,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpViewPager(){
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), agregarFragments()));
+
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_mascotas);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_perfil);
@@ -109,8 +157,26 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> agregarFragments(){
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new MascotasFragment());
-        fragments.add(new PerfilFragment());
+        fragments.add(new PerfilFragment(cuenta));
 
         return fragments;
+    }
+
+    private void enviarToken(String idDispositivo, String usuarioInstagram){
+        RegistroUsuarioAdapter registroUsuarioAdapter = new RegistroUsuarioAdapter();
+        EndpointRegistroUsuario endpointRegistroUsuario = registroUsuarioAdapter.establecerConexion();
+        Call<UsuarioResponse> usuarioResponseCall = endpointRegistroUsuario.registrarUsuario(idDispositivo, usuarioInstagram);
+        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
+            @Override
+            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
+                UsuarioResponse usuarioResponse = response.body();
+                Toast.makeText(MainActivity.this, "Usuario " + usuarioResponse.getUsuarioInstagram() + " registrado" , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "No fue posible conectarse al servicio de registro de usuario" , Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

@@ -1,19 +1,23 @@
 package com.petagram_.models;
 
 public class Foto {
-    private int foto;
+    private String foto;
     private int raiting;
 
-    public Foto(int foto, int raiting){
+    public Foto(){
+
+    }
+
+    public Foto(String foto, int raiting){
         this.foto = foto;
         this.raiting = raiting;
     }
 
-    public int getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(int foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
