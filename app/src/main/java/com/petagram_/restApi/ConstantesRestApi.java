@@ -7,16 +7,19 @@ import retrofit2.Call;
 
 public final class ConstantesRestApi {
     static final String VERSION = "/v9.0/";
-    public static final String ROOT_URL = "https://graph.facebook.com" + VERSION;
+    public static final String ROOT_URL = "https://graph.facebook.com";
+    public static final String ROOT_URL_VERSION = "https://graph.facebook.com" + VERSION;
     static final String ACCESS_TOKEN = "EAAFxXvFjcsUBAJ7ntOQHUjZBPxslYLAZA9iNfPbX4HFbZCEHSWOmDsQe17Y9tZBzhpsELR0ZBrJJ83cErRXsA5Pf6IXBZCsPu3yr2i9S20Y2f8rOoiA1VfFZClLdBBhoA2HmeD5RkOw75BcRiYXZBqiPlVJKPMjniO3b1denHv2MjAZDZD";
     static final String KEY_ACCESS_TOKEN = "&access_token=";
-    static final String DATOS_MEDIA = "?fields=like_count,media_url";
+    static final String DATOS_MEDIA = "?fields=like_count,media_url,id,comments_count";
     static final String KEY_GET_USER = "17841444945970879/";
     static final String KEY_GET_RECENT_MEDIA_USER = KEY_GET_USER + "media";
     public static final String URL_GET_RECENT_MEDIA_USER_1 = KEY_GET_RECENT_MEDIA_USER + DATOS_MEDIA + KEY_ACCESS_TOKEN + ACCESS_TOKEN;
 
     static final String DATOS_USER = "?fields=name,profile_picture_url";
     public static final String URL_GET_DATOS_USUARIO_1 = KEY_GET_USER + DATOS_USER + KEY_ACCESS_TOKEN + ACCESS_TOKEN;
+
+    public static final String URL_ENVIAR_COMENTARIO = "/{id_img}/comments?access_token=" + ACCESS_TOKEN;
 
 
 

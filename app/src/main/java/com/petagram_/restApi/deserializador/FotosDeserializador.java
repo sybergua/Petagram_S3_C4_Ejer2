@@ -32,10 +32,15 @@ public class FotosDeserializador implements JsonDeserializer<FotosResponse> {
             String urlFoto = fotoResponseDataObject.get(JsonKeys.MEDIA_URL).getAsString();
 
             int likes = fotoResponseDataObject.get(JsonKeys.MEDIA_LIKES).getAsInt();
+            int comments_count = fotoResponseDataObject.get(JsonKeys.MEDIA_COMMENTS_COUNT).getAsInt();
+            String id = fotoResponseDataObject.get(JsonKeys.MEDIA_ID).getAsString();
 
             Foto fotoActual = new Foto();
             fotoActual.setFoto(urlFoto);
             fotoActual.setRaiting(likes);
+            fotoActual.setComments_count(comments_count);
+            fotoActual.setId(id);
+
 
             fotos.add(fotoActual);
         }

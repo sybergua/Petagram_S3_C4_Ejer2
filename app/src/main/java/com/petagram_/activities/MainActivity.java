@@ -22,15 +22,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.petagram_.db.ConstructorBD;
 import com.petagram_.fragment.PerfilFragment;
 import com.petagram_.fragment.MascotasFragment;
 import com.petagram_.adapters.PageAdapter;
 import com.petagram_.R;
-import com.petagram_.restApi.EndpointRegistroUsuario;
-import com.petagram_.restApi.adapter.RegistroUsuarioAdapter;
+import com.petagram_.restApi.EndpointRegistroFireBase;
+import com.petagram_.restApi.adapter.RegistroFireBaseAdapter;
 import com.petagram_.restApi.model.UsuarioResponse;
 
 import java.util.ArrayList;
@@ -113,26 +113,32 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mNotificaciones:
                 if(!cuenta.isEmpty()) {
-                    FirebaseMessaging.getInstance().getToken()
-                            .addOnCompleteListener(new OnCompleteListener<String>() {
-                                @Override
-                                public void onComplete(@NonNull Task<String> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.w("Token: ", "Fetching FCM registration token failed", task.getException());
-                                        return;
+                    ConstructorBD db = new ConstructorBD(getApplicationContext());
+                    String idNotificacion = db.obtenerIdNotificacion();
+                    if(!idNotificacion.isEmpty()){
+                        Toast.makeText(this, "El Dispositivo ya se encuentra registrado para recibir notificaciones", Toast.LENGTH_LONG).show();
+                    }else {
+                        FirebaseMessaging.getInstance().getToken()
+                                .addOnCompleteListener(new OnCompleteListener<String>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+                                        if (!task.isSuccessful()) {
+                                            Log.w("Token: ", "Fetching FCM registration token failed", task.getException());
+                                            return;
+                                        }
+
+                                        // Get new FCM registration token
+                                        String token = task.getResult();
+
+                                        enviarToken(token, cuenta);
+                                        Log.d("Token solicitado: ", token);
                                     }
-
-                                    // Get new FCM registration token
-                                    String token = task.getResult();
-
-                                    enviarToken(token, cuenta);
-                                    Log.d("Token solicitado: ", token);
-                                }
-                            });
-                    break;
+                                });
+                    }
                 }else{
                     Toast.makeText(this, "Debe de Configurar una cuenta", Toast.LENGTH_LONG).show();
                 }
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -163,13 +169,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void enviarToken(String idDispositivo, String usuarioInstagram){
-        RegistroUsuarioAdapter registroUsuarioAdapter = new RegistroUsuarioAdapter();
-        EndpointRegistroUsuario endpointRegistroUsuario = registroUsuarioAdapter.establecerConexion();
-        Call<UsuarioResponse> usuarioResponseCall = endpointRegistroUsuario.registrarUsuario(idDispositivo, usuarioInstagram);
+        RegistroFireBaseAdapter registroFireBaseAdapter = new RegistroFireBaseAdapter();
+        EndpointRegistroFireBase endpointRegistroFireBase = registroFireBaseAdapter.establecerConexion();
+        Call<UsuarioResponse> usuarioResponseCall = endpointRegistroFireBase.registrarUsuario(idDispositivo, usuarioInstagram);
         usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
             @Override
             public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
                 UsuarioResponse usuarioResponse = response.body();
+                ConstructorBD db = new ConstructorBD(getApplicationContext());
+                db.agregarIdNotificacion(usuarioResponse.getId());
                 Toast.makeText(MainActivity.this, "Usuario " + usuarioResponse.getUsuarioInstagram() + " registrado" , Toast.LENGTH_LONG).show();
             }
 

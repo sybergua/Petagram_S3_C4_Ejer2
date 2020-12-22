@@ -1,13 +1,11 @@
 package com.petagram_.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.petagram_.db.ConstructorMascotasFavoritas;
 import com.petagram_.models.Mascota;
 import com.petagram_.adapters.MascotaAdaptador;
 import com.petagram_.R;

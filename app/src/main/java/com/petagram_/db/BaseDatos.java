@@ -31,12 +31,19 @@ public class BaseDatos extends SQLiteOpenHelper {
                         ConstantesBaseDatos.TABLA_MASCOTAS_FAVORITAS_SEXO + " INTEGER" +
                         ")";
 
+        String queryCrearTablaIdNotificacion =
+                " CREATE TABLE " + ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES + "(" +
+                ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES_ID + " TEXT PRIMARY KEY" +
+                ")";
+
         db.execSQL(queryCrearTablaMascotasFavoritas);
+        db.execSQL(queryCrearTablaIdNotificacion);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ConstantesBaseDatos.TABLA_MASCOTAS_FAVORITAS);
+        db.execSQL("DROP TABLE IF EXISTS " + ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES);
         onCreate(db);
     }
 
@@ -114,6 +121,29 @@ public class BaseDatos extends SQLiteOpenHelper {
     public void eliminarMascotaFavoritaExistente(String nombreMascota){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ConstantesBaseDatos.TABLA_MASCOTAS_FAVORITAS,ConstantesBaseDatos.TABLA_MASCOTAS_FAVORITAS_NOMBRE + "=?",new String[]{nombreMascota});
+        db.close();
+    }
+
+    public String consultaIdNotificacion(){
+        String id = "";
+        String query =
+                "SELECT " + ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES_ID +
+                " FROM " + ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor registros = db.rawQuery(query, null);
+
+        if (registros.moveToNext()) {
+            id = registros.getString(0);
+        }
+
+        db.close();
+
+        return id;
+    }
+    public void insersarIdNotificacion (ContentValues contentValues){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES,null, contentValues);
         db.close();
     }
 }

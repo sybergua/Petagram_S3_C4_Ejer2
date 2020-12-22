@@ -11,4 +11,7 @@ public final class ConstantesBaseDatos {
     public static final String TABLA_MASCOTAS_FAVORITAS_RAITING = "raiting";
     public static final String TABLA_MASCOTAS_FAVORITAS_SEXO = "sexo";
 
+    public static final String TABLA_ID_NOTIFICACIONES = "ID_NOTIFICACION";
+    public static final String TABLA_ID_NOTIFICACIONES_ID = "id";
+
 }

@@ -7,10 +7,10 @@ import com.petagram_.models.Mascota;
 
 import java.util.ArrayList;
 
-public class ConstructorMascotasFavoritas {
+public class ConstructorBD {
     private Context context;
 
-    public ConstructorMascotasFavoritas(Context context){
+    public ConstructorBD(Context context){
         this.context = context;
     }
 
@@ -27,5 +27,17 @@ public class ConstructorMascotasFavoritas {
         contentValues.put(ConstantesBaseDatos.TABLA_MASCOTAS_FAVORITAS_RAITING, mascota.getValorRaiting());
         contentValues.put(ConstantesBaseDatos.TABLA_MASCOTAS_FAVORITAS_SEXO, mascota.isSexo() ? 1:0);
         db.insertarMascotaFavorita(contentValues);
+    }
+
+    public String obtenerIdNotificacion(){
+        BaseDatos db = new BaseDatos(context);
+        return  db.consultaIdNotificacion();
+    }
+
+    public void agregarIdNotificacion(String id){
+        BaseDatos db = new BaseDatos(context);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ConstantesBaseDatos.TABLA_ID_NOTIFICACIONES_ID, id);
+        db.insersarIdNotificacion(contentValues);
     }
 }

@@ -3,7 +3,7 @@ package com.petagram_.presenter;
 import android.content.Context;
 
 import com.petagram_.activities.IMascotasFavoritasView;
-import com.petagram_.db.ConstructorMascotasFavoritas;
+import com.petagram_.db.ConstructorBD;
 import com.petagram_.models.Mascota;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MascotasFavoritasPresenter implements IMascotasFavoritasPresenter{
     private IMascotasFavoritasView iMascotasFavoritasView;
     private Context context;
-    private ConstructorMascotasFavoritas constructorMascotasFavoritas;
+    private ConstructorBD constructorBD;
     private ArrayList<Mascota> mascotas;
 
     public MascotasFavoritasPresenter(IMascotasFavoritasView iMascotasFavoritasView, Context context){
@@ -22,8 +22,8 @@ public class MascotasFavoritasPresenter implements IMascotasFavoritasPresenter{
 
     @Override
     public void obtenerMascotasFavoritasBaseDatos() {
-        constructorMascotasFavoritas = new ConstructorMascotasFavoritas(context);
-        mascotas =constructorMascotasFavoritas.obtenerMascotasFavoritas();
+        constructorBD = new ConstructorBD(context);
+        mascotas = constructorBD.obtenerMascotasFavoritas();
         mostrarMascotasFavoritasRV();
     }
 

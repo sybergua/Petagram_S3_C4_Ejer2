@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.petagram_.R;
+import com.petagram_.db.ConstructorBD;
 import com.petagram_.restApi.ConstantesRestApi;
 
 import static android.app.ActionBar.DISPLAY_SHOW_CUSTOM;

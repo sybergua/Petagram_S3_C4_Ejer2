@@ -57,7 +57,7 @@ public class PerfilFragment extends Fragment implements IPerfilFragment{
 
     @Override
     public PerfilAdaptador crearAdaptador(ArrayList<Foto> fotos) {
-        PerfilAdaptador adaptador =new PerfilAdaptador(fotos, getActivity(), true);
+        PerfilAdaptador adaptador =new PerfilAdaptador(fotos, getActivity(), true, cuenta);
         return adaptador;
     }
 

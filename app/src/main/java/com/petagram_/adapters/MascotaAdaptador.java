@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.petagram_.db.ConstructorMascotasFavoritas;
+import com.petagram_.db.ConstructorBD;
 import com.petagram_.models.Mascota;
 import com.petagram_.R;
 
@@ -52,8 +52,8 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
                 mascota.setValorRaiting(mascota.getValorRaiting() + 1);
                 mascotaViewHolder.tvRaitingMascota.setText("" + mascota.getValorRaiting());
 
-                ConstructorMascotasFavoritas constructorMascotasFavoritas = new ConstructorMascotasFavoritas(activity);
-                constructorMascotasFavoritas.agregarMascotaFavorita(mascota);
+                ConstructorBD constructorBD = new ConstructorBD(activity);
+                constructorBD.agregarMascotaFavorita(mascota);
             }
         });
     }
